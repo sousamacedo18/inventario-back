@@ -85,7 +85,34 @@ router.post("/",(req,res)=>{
             }
 });
 router.delete("/",(req,res)=>{
+ let novoarray=[];
+ const {id} = req.body;
+ novoarray=usuarios.filter(linha=>{
+  if(linha.id!==id){
+    return linha;
+  }
+    
+ })
+ res.status(200).send(
+    novoarray
+ )
+})
 
+router.patch("/",(req,res)=>{
+ let novoarray=[];
+  const {nome,email,senha,id} = req.body;
+ novoarray=usuarios.filter(linha=>{
+    if(linha.id==id){
+        return{
+                    id:id,
+                    nome:nome,
+                    email: email,
+                    senha: senha
+                }
+    }else{
+        return linha;
+    }
+ })
 })
 
 module.exports = router;
