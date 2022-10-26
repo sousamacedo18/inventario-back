@@ -1,7 +1,18 @@
 
 const express = require("express");
 const router = express.Router();
-
+function validaremail(){
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+function verificarduplicidade(email){
+    let dadosnovos = [];
+    dadosnovos = usuarios.filter(item=>item.email==email);
+    if(dadosnovos.length>0){
+        return true
+    }
+    return false;
+}
 
 const usuarios=[
     {
@@ -64,11 +75,28 @@ router.get("/:id",(req,res)=>{
 })
 router.post("/",(req,res)=>{
     const {id,nome,email,senha}=req.body;
+    let i=0;
+    let errorMsg=[];
     if (nome.length<=3){
-        res.status(500).send(
-            {mensagem:'Campo nome menor que 3 caracteres'}
-            )
-       }else{
+      i++;
+       errorMsg.push(
+        {mensagem:"'Campo nome menor que 3 caracteres'"}
+       )
+    }
+    if(!validaremail(email)){
+        i++;
+        errorMsg.push(
+         {mensagem:"E-mail inválido!"}
+        )    
+    }
+    if(verificarduplicidade(email)==true){
+        i++;
+        errorMsg.push(
+         {mensagem:"E-mail já cadastrado!"}
+        )   
+    }
+       
+       if(i==0){
             usuarios.push(
                 {
                     id:id,
@@ -77,11 +105,13 @@ router.post("/",(req,res)=>{
                     senha: senha
                 }
             )
-    
-
-            res.status(200).send(
+            res.status(201).send(
                 {mensagem:'Cadastro Salvo com Sucesso'}
                 )
+            }else{
+                res.status(406).send(
+                    {mensagem:errorMsg}
+                    )  
             }
 });
 router.delete("/",(req,res)=>{
@@ -101,7 +131,8 @@ router.delete("/",(req,res)=>{
 router.patch("/",(req,res)=>{
  let novoarray=[];
   const {nome,email,senha,id} = req.body;
- novoarray=usuarios.filter(linha=>{
+ novoarray=us
+ usuarios.filter(linha=>{
     if(linha.id==id){
         return{
                     id:id,
