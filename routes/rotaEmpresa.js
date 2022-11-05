@@ -1,72 +1,50 @@
 
 const express = require("express");
 const router = express.Router();
-function validaremail(){
-    var re = /\S+@\S+\.\S+/;
-    return re.test(email);
-}
-function verificarduplicidade(email){
-    let dadosnovos = [];
-    dadosnovos = usuarios.filter(item=>item.email==email);
-    if(dadosnovos.length>0){
-        return true
-    }
-    return false;
-}
 
-const usuarios=[
+
+const empresas=[
     {
         id:1,
-        nome:"Derick",
-        email: "derick@gmail.com",
-        senha: "123"
+        nome:"Sup Campelo",
+        contato: "633333333",
+        responsavel:"João"
     },
-    { 
+    {
         id:2,
-        nome:"Iudhy",
-        email: "iudhy@gmail.com",
-        senha: "123"
+        nome:"Sup Baratão",
+        contato: "633333333",
+        responsavel:"José"
     },
     {
         id:3,
-        nome:"Willian",
-        email: "willian@gmail.com",
-        senha: "123"
+        nome:"Concrenorte",
+        contato: "633333333",
+        responsavel:"Pedro"
     },
     {
         id:4,
-        nome:"Bispo",
-        email: "bispo@gmail.com",
-        senha: "123"
+        nome:"Energisa",
+        contato: "633333333",
+        responsavel:"Antonio"
     },
     {
         id:5,
-        nome:"Wesley",
-        email: "bispo@gmail.com",
-        senha: "123"
+        nome:"Brk",
+        contato: "633333333",
+        responsavel:"Maria"
     },
-    { 
-        id:6,
-        nome:"Raimundo",
-        email: "raimundo@gmail.com",
-        senha: "123"
-    },
-    {
-        id:7,
-        nome:"Wallysson",
-        email: "wallysson@gmail.com",
-        senha: "123"
-    },
+
 
 ]
 router.get("/",(req,res)=>{
 
-   res.send(usuarios);
+   res.send(empresas);
 })
 router.get("/:id",(req,res)=>{
    const id=req.params.id;
    let novoarray=[];
-   novoarray=usuarios.filter(linha=>{
+   novoarray=empresas.filter(linha=>{
     if(linha.id==id){
         return linha;
     }
@@ -74,7 +52,7 @@ router.get("/:id",(req,res)=>{
    res.send(novoarray);
 })
 router.post("/",(req,res)=>{
-    const {id,nome,email,senha}=req.body;
+    const {id,nome,responsavel,contato}=req.body;
     let i=0;
     let errorMsg=[];
     if (nome.length<=3){
@@ -83,30 +61,13 @@ router.post("/",(req,res)=>{
         {mensagem:"'Campo nome menor que 3 caracteres'"}
        )
     }
-    if(!validaremail(email)){
-        i++;
-        errorMsg.push(
-         {mensagem:"E-mail inválido!"}
-        )    
-    }
-    if(verificarduplicidade(email)==true){
-        i++;
-        errorMsg.push(
-         {mensagem:"E-mail já cadastrado!"}
-        )   
-    }
-
-
-
-
-
        if(i==0){
-            usuarios.push(
+            empresas.push(
                 {
                     id:id,
                     nome:nome,
-                    email: email,
-                    senha: senha
+                    responsavel: responsavel,
+                    contato: contato
                 }
             )
             res.status(201).send(
@@ -121,7 +82,7 @@ router.post("/",(req,res)=>{
 router.delete("/",(req,res)=>{
  let novoarray=[];
  const {id} = req.body;
- novoarray=usuarios.filter(linha=>{
+ novoarray=empresas.filter(linha=>{
   if(linha.id!==id){
     return linha;
   }
@@ -136,7 +97,7 @@ router.patch("/",(req,res)=>{
  let novoarray=[];
   const {nome,email,senha,id} = req.body;
  novoarray=
- usuarios.filter(linha=>{
+ empresas.filter(linha=>{
     if(linha.id==id){
         return{
                     id:id,

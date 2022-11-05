@@ -1,0 +1,28 @@
+[
+    {
+        "id":1,
+        "nome":"computador",
+        "dataaquisicao":"10/12/1999"
+    },
+    {
+        "id":2,
+        "nome":"notebook",
+        "dataaquisicao":"21/05/2004"
+    },
+    {
+        "id":3,
+        "nome":"Mouse",
+        "dataaquisicao":"25/12/2004"
+    },
+    {
+        "id":4,
+        "nome":"Mesa",
+        "dataaquisicao":"21/09/2000"
+    },
+    {
+        "id":5,
+        "nome":"Porta",
+        "dataaquisicao":"23/09/2004"
+    }
+
+                 ]
